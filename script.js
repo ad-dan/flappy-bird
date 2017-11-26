@@ -50,6 +50,13 @@ const rndRange = (min,max) => {
   return Math.floor(Math.random()*(max-min+1)) + min;
 }
 let pipeNumber = 5.5;
+const resetBoard = () => {
+  bird.x = 25;
+  bird.y = 25;
+  pipesArray.length = 0;
+  pipesArray.push(new Pipes(1), new Pipes(3), new Pipes(5));
+  pipeNumber = 5.5;
+}
 pipesArray.push(new Pipes(1), new Pipes(3), new Pipes(5));
 
 const draw = () => {
@@ -71,7 +78,7 @@ const addNewPipe = ()=> {
   pipesArray.shift();
   pipesArray.push(new Pipes(pipeNumber));
   
-  pipeNumber ++;
+  pipeNumber += 0.2;
 }
 const checkState = () => {
   pipesArray.forEach(pipe => {
@@ -80,20 +87,17 @@ const checkState = () => {
 
   })
   if(bird.y>=375){
-    location.reload()
+    resetBoard();
   }
   
-  pipesArray.forEach(pipe => {
-    
-  })
   if(pipesArray[0].pipeN.x < -45) {
     addNewPipe();
   }
-  if(pipesArray[0].pipeN.x <= bird.x && pipesArray[0].pipeN.x >= 0){
+  if(pipesArray[0].pipeN.x <= bird.x + 35 && pipesArray[0].pipeN.x >= 0){
     const pipeSEnd = pipesArray[0].pipeS.y + pipSheight;
     const pipeNEnd = pipesArray[0].pipeN.y + pipNheight;
-    if(bird.y <= pipeNEnd || pipeNEnd + pipeGap + 25<= bird.y){
-      location.reload()
+    if((bird.y<= pipeNEnd || pipeNEnd + pipeGap + 25 <= bird.y)){
+      resetBoard();
     }
     
   }
